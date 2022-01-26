@@ -1,0 +1,43 @@
+version: "3.9"
+networks:
+    posts-and-comments-mysql:
+        external: true
+
+services:
+  database:
+    container_name: posts-and-comments-mysql
+    platform: linux/amd64
+    image: mysql:8
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=posts-and-comments
+    volumes:
+      - .mysql/:/var/lib/mysql
+    networks:
+        - posts-and-comments-mysql
+
+  posts-and-comments:
+    container_name: posts-and-comments
+    build:
+      context: .
+      args:
+        - DB_HOST=posts-and-comments-mysql
+        - DB_DATABASE=posts-and-comments
+        - DB_USERNAME=root
+        - DB_PASSWORD=root
+    volumes:
+      - .:/var/www/app/
+    ports:
+      - 8081:8080
+    environment:
+      - APP_NAME=Laravel
+      - APP_ENV=local
+      - APP_KEY=base64:xlPnGKHqi0nDmsxU/BLkU472CdwyeH1w0xD78G3Vqck=
+      - DB_HOST=posts-and-comments-mysql
+      - DB_DATABASE=posts-and-comments
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+    networks:
+        - posts-and-comments-mysql
