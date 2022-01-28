@@ -17,8 +17,13 @@ class Posts extends Model
         'content',
     ];
 
-    public function hasMany($related, $foreignKey = null, $localKey = null)
+    public function comments()
     {
         return $this->hasMany(Comments::class, 'posts_id', 'id');
+    }
+
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return $this->where('uuid', $value)->firstOrFail();
     }
 }

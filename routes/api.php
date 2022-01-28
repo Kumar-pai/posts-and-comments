@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\PostsController;
+use App\Http\Controllers\CommentsController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::controller(PostsController::class)->group(function () {
+    Route::get('/posts', 'index');
+    Route::get('/posts/{posts}', 'show');
+    Route::post('/posts', 'store');
+    Route::patch('/posts/{posts}', 'update');
+    Route::delete('/posts/{posts}', 'destroy');
 });
