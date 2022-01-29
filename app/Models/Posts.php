@@ -11,6 +11,8 @@ class Posts extends Model
 {
     use HasFactory;
 
+    protected $table = 'posts';
+
     protected $fillable = [
         'uuid',
         'title',

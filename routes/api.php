@@ -24,3 +24,11 @@ Route::controller(PostsController::class)->group(function () {
     Route::patch('/posts/{posts}', 'update');
     Route::delete('/posts/{posts}', 'destroy');
 });
+
+Route::controller(CommentsController::class)->group(function () {
+    Route::get('/posts/{posts}/comments', 'index');
+    Route::get('/posts/{posts}/comments/{comments}', 'show');
+    Route::post('/posts/{posts}/comments', 'store');
+    Route::patch('/posts/{posts}/comments/{comments}', 'update');
+    Route::delete('/posts/{posts}/comments/{comments}', 'destroy');
+});

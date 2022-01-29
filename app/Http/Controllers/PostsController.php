@@ -17,7 +17,8 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Posts::all();
+        $posts = Posts::with('comments')->get();
+
         return response($posts);
     }
 
